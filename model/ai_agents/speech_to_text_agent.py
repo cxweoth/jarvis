@@ -25,7 +25,7 @@ class SpeechToTextAgent:
                 text = self.transcribe(audio_path)
                 self.user_text_input_queue.put(text)
                 # remove the audio file
-                # os.remove(audio_path)
+                os.remove(audio_path)
 
             time.sleep(0.01)
 
