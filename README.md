@@ -19,3 +19,8 @@ pip install torch torchvision torchaudio --extra-index-url https://download.pyto
 3. Copy whisper folder from [Link](https://github.com/ml-explore/mlx-examples/tree/main/)
 ## Models
 - Whisper [Link](https://github.com/openai/whisper) with MLX convert [Link](https://github.com/ml-explore/mlx-examples/tree/main/whisper)
+
+# Ref
+- [JARVIS-ChatGPT: A conversational assistant equipped with J.A.R.V.I.S's voice](https://github.com/BolisettySujith/J.A.R.V.I.S?tab=readme-ov-file)
+- [MLX Whisper](https://github.com/ml-explore/mlx-examples/tree/main/whisper)
+- [A Simple Voice Assistant Script](https://github.com/linyiLYi/voice-assistant): Lin-Yi

@@ -22,7 +22,7 @@ class JarvisView(tk.Label):
 
         # size setting
         self._outer_radius, self._inner_radius = 92, 61
-        self._sensitivity = 20
+        self._sensitivity = 75
         self._output_size = (300, 300)
         self._center_size = (130, 130)
 
