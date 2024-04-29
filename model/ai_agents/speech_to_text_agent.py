@@ -24,6 +24,7 @@ class SpeechToTextAgent:
             if audio_path:
                 text = self.transcribe(audio_path)
                 self.user_text_input_queue.put(text)
+                print("transcribe text: ", text)
                 # remove the audio file
                 os.remove(audio_path)
 

@@ -12,3 +12,6 @@ more-itertools
 tiktoken==0.3.3
 huggingface_hub
 scipy
+
+langchain
+langchain-community

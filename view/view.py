@@ -23,15 +23,19 @@ class View(tk.Tk):
         self.geometry('800x800')
         self.title('Jarvis')
 
-        self.update_frame()
+        self.update_human_frame()
+        self.update_jarvis_frame()
         self.check_interrupt()
 
-    def update_frame(self):
+    def update_human_frame(self):
 
-        self.jarvis_view.update_jarvis()
         self.huamn_voice_view.update_human_voice()
 
-        self.after(1, self.update_frame)
+        self.after(5, self.update_human_frame)
+
+    def update_jarvis_frame(self):
+        self.jarvis_view.update_jarvis()
+        self.after(42, self.update_jarvis_frame)
 
     def check_interrupt(self):
         try:
