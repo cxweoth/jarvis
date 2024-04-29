@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>WebSocket Test</title>
+    </head>
+    <body>
+        <h1>WebSocket Example</h1>
+        <textarea id="ws-response" cols="30" rows="10"></textarea><br>
+        <button onclick="sendMessage()">Send Message</button>
+        <script>
+            var ws = new WebSocket("ws://127.0.0.1:8000/api/v1/llm/chatbot/ws");
+            ws.onmessage = function(event) {
+                var messages = document.getElementById('ws-response');
+                messages.value += event.data + '\\n';
+            };
+            function sendMessage() {
+                ws.send("Hello, server!");
+            }
+        </script>
+    </body>
+</html>

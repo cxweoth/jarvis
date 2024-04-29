@@ -7,6 +7,7 @@ MAC OS
 ```
 brew install portaudio
 pip install -r requirements.txt
+pip install "uvicorn[standard]"
 CMAKE_ARGS="-DLLAMA_METAL=on" pip install llama-cpp-python
 pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/macos_arm64
 ```

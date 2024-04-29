@@ -15,3 +15,5 @@ scipy
 
 langchain
 langchain-community
+fastapi 
+uvicorn
