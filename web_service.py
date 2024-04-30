@@ -34,4 +34,3 @@ def web_service(root_path):
 if __name__ == '__main__':
     root_path = os.path.dirname(os.path.realpath(__file__))
     web_service(root_path)
-

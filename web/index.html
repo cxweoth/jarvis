@@ -1,21 +1,123 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>WebSocket Test</title>
+        <title>LLM Chat</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+            }
+            #chat-wrapper {
+                width: 80%;
+                max-width: 800px; /* Adjust this value based on your preference */
+                display: flex;
+                flex-direction: column;
+                align-items: left;
+            }
+            #chat-container {
+                width: 100%;
+                height: 400px;
+                border: 1px solid #ccc;
+                padding: 10px;
+                overflow-y: scroll;
+            }
+            .message {
+                padding: 5px;
+                margin-bottom: 2px;
+                border-radius: 5px;
+            }
+            .received {
+                background-color: #f0f0f0;
+                text-align: left;
+            }
+            .sent {
+                background-color: #d1e7dd;
+                text-align: right;
+            }
+            #input-container {
+                width: 100%;
+                margin-top: 10px;
+                display: flex;
+                justify-content: space-between;
+            }
+            #messageText {
+                flex-grow: 1;
+                margin-right: 10px;
+                padding: 10px;
+            }
+            button {
+                padding: 10px 20px;
+            }
+        </style>
     </head>
     <body>
-        <h1>WebSocket Example</h1>
-        <textarea id="ws-response" cols="30" rows="10"></textarea><br>
-        <button onclick="sendMessage()">Send Message</button>
+        <div id="chat-wrapper">
+            <h1>LLM Chat</h1>
+            <div id="chat-container"></div>
+            <div id="input-container">
+                <input type="text" id="messageText" placeholder="Type your message here...">
+                <button onclick="sendMessage()">Send</button>
+                <button onclick="startWebSocket()">Open Connection</button>
+                <button onclick="closeWebSocket()" style="background-color: red;">Close Connection</button>
+            </div>
+        </div>
         <script>
-            var ws = new WebSocket("ws://127.0.0.1:8000/api/v1/llm/chatbot/ws");
-            ws.onmessage = function(event) {
-                var messages = document.getElementById('ws-response');
-                messages.value += event.data + '\\n';
-            };
-            function sendMessage() {
-                ws.send("Hello, server!");
+            var ws;
+
+            function startWebSocket() {
+                ws = new WebSocket("ws://127.0.0.1:8000/api/v1/llm/chatbot/ws");
+                ws.onmessage = function(event) {
+                    var chatContainer = document.getElementById('chat-container');
+                    var messageDiv = document.createElement('div');
+                    messageDiv.classList.add('message', 'received');
+                    messageDiv.textContent = event.data;
+                    chatContainer.appendChild(messageDiv);
+                    chatContainer.scrollTop = chatContainer.scrollHeight; // Auto-scroll to latest message
+                };
+                ws.onopen = function(event) {
+                    var chatContainer = document.getElementById('chat-container');
+                    var messageDiv = document.createElement('div');
+                    messageDiv.classList.add('message', 'received');
+                    messageDiv.textContent = "Connection established!";
+                    chatContainer.appendChild(messageDiv);
+                };
             }
+
+            function closeWebSocket() {
+                if (ws) {
+                    ws.close();
+                    var chatContainer = document.getElementById('chat-container');
+                    var messageDiv = document.createElement('div');
+                    messageDiv.classList.add('message', 'received');
+                    messageDiv.textContent = "Connection closed!";
+                    chatContainer.appendChild(messageDiv);
+                }
+            }
+
+            function sendMessage() {
+                var messageInput = document.getElementById('messageText');
+                var message = messageInput.value;
+                if (message.trim() === '' || !ws || ws.readyState !== WebSocket.OPEN) return; // Don't send empty messages or if websocket is not open
+                var chatContainer = document.getElementById('chat-container');
+                var messageDiv = document.createElement('div');
+                messageDiv.classList.add('message', 'sent');
+                messageDiv.textContent = message;
+                chatContainer.appendChild(messageDiv);
+                chatContainer.scrollTop = chatContainer.scrollHeight; // Auto-scroll to latest message
+                ws.send(message);
+                messageInput.value = ''; // Clear input box after sending
+            }
+
+            document.getElementById('messageText').addEventListener('keydown', function(event) {
+                if (event.key === 'Enter' && !event.shiftKey) {
+                    event.preventDefault(); // Prevent the default action to stop from creating a new line
+                    sendMessage();
+                }
+            });
         </script>
     </body>
 </html>

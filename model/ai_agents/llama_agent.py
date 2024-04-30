@@ -4,7 +4,7 @@ from langchain_community.llms import LlamaCpp
 
 class LlamaAgent:
 
-    def __init__(self, model_path="models/codellama-7b.Q4_0.gguf", prompt_path = "prompts/example-en.txt"):
+    def __init__(self, model_path="models/llama-2-7b.Q4_K_M.gguf", prompt_path = "prompts/example-en.txt"):
 
         self._model_path = model_path
         self._prompt_path = prompt_path
